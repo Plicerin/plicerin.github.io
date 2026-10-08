@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plicerin — Classic Game Ports</title>
+<meta name="description" content="Atari 2600, Intellivision and Apple II games rebuilt in the browser from the original cartridges and disks, each checked against the real ROM.">
+<style>
+  :root {
+    --bg: #0a0b10;
+    --panel: #12141c;
+    --panel-hi: #181b26;
+    --line: #262a38;
+    --text: #e8eaf2;
+    --muted: #9097ab;
+    --dim: #5d6378;
+    --accent: #ffd34d;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: radial-gradient(ellipse at top, #161a2a 0%, var(--bg) 60%) fixed, var(--bg);
+    color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+  header { text-align: center; padding: 64px 0 28px; }
+  .stripes { width: min(420px, 80%); margin: 0 auto 28px; display: grid; gap: 5px; }
+  .stripes i { display: block; height: 5px; border-radius: 3px; }
+  h1 {
+    margin: 0;
+    font: 800 clamp(2.2rem, 6vw, 3.6rem)/1.05 ui-monospace, "Cascadia Mono", Consolas, monospace;
+    letter-spacing: .06em;
+    text-shadow: 0 0 24px rgba(255, 255, 255, .18);
+  }
+  .lede { max-width: 640px; margin: 18px auto 0; color: var(--muted); font-size: 1.05rem; }
+  .lede b { color: var(--text); font-weight: 600; }
+
+  section { padding: 28px 0 8px; }
+  h2 {
+    display: flex; align-items: center; gap: 12px;
+    margin: 0 0 18px;
+    font: 700 .82rem/1 ui-monospace, Consolas, monospace;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+  }
+  h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+  .card {
+    display: flex; flex-direction: column;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    color: inherit; text-decoration: none;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .card:hover, .card:focus-visible { transform: translateY(-3px); border-color: #3a4058; background: var(--panel-hi); }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .shot { aspect-ratio: 4 / 3; background: #000; display: grid; place-items: center; overflow: hidden; }
+  .shot img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; display: block; }
+  .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .title { margin: 0; font-size: 1.2rem; font-weight: 700; }
+  .meta { font: .78rem/1.3 ui-monospace, Consolas, monospace; color: var(--dim); letter-spacing: .04em; }
+  .desc { margin: 4px 0 0; color: var(--muted); font-size: .94rem; flex: 1; }
+  .links { display: flex; gap: 16px; margin-top: 10px; font-size: .88rem; }
+  .play { color: var(--accent); font-weight: 600; }
+  .src { color: var(--muted); }
+  .src:hover { color: var(--text); }
+
+  footer { text-align: center; color: var(--dim); font-size: .85rem; padding: 48px 0 56px; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="stripes" aria-hidden="true">
+      <i style="background:#2f5cff"></i><i style="background:#18a058"></i><i style="background:#f2d43d"></i>
+      <i style="background:#ff8a1f"></i><i style="background:#e8432e"></i><i style="background:#8a4dff"></i>
+    </div>
+    <h1>CLASSIC PORTS</h1>
+    <p class="lede">Early-'80s games rebuilt in the browser <b>from the original cartridges and disks</b>, then checked against the real ROM so they play the way the machine played them.</p>
+  </header>
+
+  <main id="ports"></main>
+
+  <footer>
+    Source for every port is on <a href="https://github.com/Plicerin">GitHub</a>. Original games © their respective publishers. No ROMs are included.
+  </footer>
+</div>
+
+<script>
+  const GROUPS = [
+    { name: "Atari 2600", ports: [
+      { title: "Adventure", meta: "Atari · 1980 · Warren Robinett", img: "adventure.png", repo: "adventure-rom-port",
+        desc: "The first action-adventure: three castles, three dragons and the hidden room, translated instruction for instruction from the cartridge." },
+      { title: "River Raid", meta: "Activision · 1982 · Carol Shaw", img: "riverraid.png", repo: "riverraid-rom-port",
+        desc: "Fly the river, bomb the bridges and watch the fuel gauge. Ported routine by routine from the ROM and diffed against it frame by frame." },
+      { title: "Pitfall!", meta: "Activision · 1982 · David Crane", img: "pitfall.png", repo: "pitfall-rom-port",
+        desc: "Twenty minutes, 255 jungle screens and 32 treasures. Translated from the cartridge and checked against the real ROM." },
+      { title: "Berzerk", meta: "Atari · 1982 · Dan Hitchens", img: "berzerk.png", repo: "berzerk-rom-port",
+        desc: "Shoot robots, escape the maze, and don't let Evil Otto catch you. All twelve game variations, verified against the cartridge." },
+      { title: "Donkey Kong", meta: "Coleco · 1982 · Garry Kitchen", img: "donkeykong.png", repo: "donkeykong-rom-port",
+        desc: "Barrels and rivets, the way the 2600 cart ran them. A static translation of the ROM checked over 100,000 frames." },
+    ]},
+    { name: "Intellivision", ports: [
+      { title: "Dracula", meta: "Imagic · 1982", img: "dracula.png", repo: "dracula-1982",
+        desc: "One street, one night. Stalk victims as the Count before sunrise. A pixel-perfect port rebuilt from the original ROM." },
+      { title: "Swords & Serpents", meta: "Imagic · 1982", img: "swords.png", repo: "Swords-and-Serpents",
+        desc: "A two-hero dungeon crawl with the Warrior Prince and Nilrem the Wizard, rebuilt frame by frame from the cartridge." },
+    ]},
+    { name: "Apple II", ports: [
+      { title: "Space Vikings", meta: "subLOGIC · 1982 · Mitchell Robbins", img: "spacevikings.png", repo: "space-vikings-port",
+        desc: "Space combat and planetary conquest with a crew whose morale you can ruin. Measured against the original floppy by 53 parity suites." },
+    ]},
+  ];
+
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  document.getElementById("ports").innerHTML = GROUPS.map(g => `
+    <section>
+      <h2>${esc(g.name)}</h2>
+      <div class="grid">${g.ports.map(p => `
+        <article class="card">
+          <a class="shot" href="/${p.repo}/" tabindex="-1" aria-hidden="true"><img src="img/${p.img}" alt="" loading="lazy"></a>
+          <div class="body">
+            <h3 class="title">${esc(p.title)}</h3>
+            <div class="meta">${esc(p.meta)}</div>
+            <p class="desc">${esc(p.desc)}</p>
+            <div class="links">
+              <a class="play" href="/${p.repo}/">Play →</a>
+              <a class="src" href="https://github.com/Plicerin/${p.repo}">Source</a>
+            </div>
+          </div>
+        </article>`).join("")}
+      </div>
+    </section>`).join("");
+</script>
+</body>
+</html>
