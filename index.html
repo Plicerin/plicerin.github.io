@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Plicerin — Classic Game Ports</title>
-<meta name="description" content="Atari 2600, Intellivision and Apple II games rebuilt in the browser from the original cartridges and disks, each checked against the real ROM.">
+<meta name="description" content="Atari 2600, arcade, Intellivision and Apple II games rebuilt in the browser from the original cartridges, arcade ROMs and disks, each checked against the real ROM.">
 <style>
   :root {
     --bg: #0a0b10;
@@ -82,7 +82,7 @@
       <i style="background:#ff8a1f"></i><i style="background:#e8432e"></i><i style="background:#8a4dff"></i>
     </div>
     <h1>CLASSIC PORTS</h1>
-    <p class="lede">Early-'80s games rebuilt in the browser <b>from the original cartridges and disks</b>, then checked against the real ROM so they play the way the machine played them.</p>
+    <p class="lede">Early-'80s games rebuilt in the browser <b>from the original cartridges, arcade ROMs and disks</b>, then checked against the real ROM so they play the way the machine played them.</p>
   </header>
 
   <main id="ports"></main>
@@ -105,6 +105,10 @@
         desc: "Shoot robots, escape the maze, and don't let Evil Otto catch you. All twelve game variations, verified against the cartridge." },
       { title: "Donkey Kong", meta: "Coleco · 1982 · Garry Kitchen", img: "donkeykong.png", repo: "donkeykong-rom-port",
         desc: "Barrels and rivets, the way the 2600 cart ran them. A static translation of the ROM checked over 100,000 frames." },
+    ]},
+    { name: "Arcade", ports: [
+      { title: "Burger Time", meta: "Data East · 1982", img: "burgertime.png", repo: "burgertime-rom-port",
+        desc: "Peter Pepper against the hot dogs, pickles and eggs. Both the game program and the sound program translated from the arcade ROMs and checked frame by frame, against the ROMs and against MAME." },
     ]},
     { name: "Intellivision", ports: [
       { title: "Dracula", meta: "Imagic · 1982", img: "dracula.png", repo: "dracula-1982",
